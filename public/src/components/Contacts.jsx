@@ -6,25 +6,13 @@ export default function Contacts({ contacts, changeChat }) {
   const [currentUserName, setCurrentUserName] = useState(undefined);
   const [currentUserImage, setCurrentUserImage] = useState(undefined);
   const [currentSelected, setCurrentSelected] = useState(undefined);
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const data = JSON.parse(localStorage.getItem("chat-app-user"));
-        if (data) {
-          setCurrentUserName(data.username);
-          setCurrentUserImage(data.avatarImage);
-        } else {
-          console.error('No user data found in localStorage');
-        }
-      } catch (error) {
-        console.error('Error parsing user data from localStorage:', error);
-      }
-    };
-
-    fetchUserData();
+  useEffect(async () => {
+    const data = await JSON.parse(
+      localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
+    );
+    setCurrentUserName(data.username);
+    setCurrentUserImage(data.avatarImage);
   }, []);
-
   const changeCurrentChat = (index, contact) => {
     setCurrentSelected(index);
     changeChat(contact);
@@ -35,7 +23,7 @@ export default function Contacts({ contacts, changeChat }) {
         <Container>
           <div className="brand">
             <img src={Logo} alt="logo" />
-            <h3>snapTalk</h3>
+            <h3>snappy</h3>
           </div>
           <div className="contacts">
             {contacts.map((contact, index) => {
@@ -153,14 +141,6 @@ const Container = styled.div`
       }
     }
     @media screen and (min-width: 720px) and (max-width: 1080px) {
-      gap: 0.5rem;
-      .username {
-        h2 {
-          font-size: 1rem;
-        }
-      }
-    }
-    @media screen and (min-width: 360px) and (max-width: 480px) {
       gap: 0.5rem;
       .username {
         h2 {

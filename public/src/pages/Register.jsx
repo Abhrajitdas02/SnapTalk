@@ -24,7 +24,7 @@ export default function Register() {
   });
 
   useEffect(() => {
-    if (localStorage.getItem("chat-app-user")) {
+    if (localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
       navigate("/");
     }
   }, []);
@@ -64,8 +64,6 @@ export default function Register() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (handleValidation()) {
-      console.log("in validation",registerRoute); //   for checking
-   
       const { email, username, password } = values;
       const { data } = await axios.post(registerRoute, {
         username,
@@ -78,7 +76,7 @@ export default function Register() {
       }
       if (data.status === true) {
         localStorage.setItem(
-          "chat-app-user",
+          process.env.REACT_APP_LOCALHOST_KEY,
           JSON.stringify(data.user)
         );
         navigate("/");

@@ -3,24 +3,13 @@ import styled from "styled-components";
 import Robot from "../assets/robot.gif";
 export default function Welcome() {
   const [userName, setUserName] = useState("");
-
-  useEffect(() => {
-    const fetchUserName = async () => {
-      try {
-        const data = JSON.parse(localStorage.getItem("chat-app-user"));
-        if (data) {
-          setUserName(data.username);
-        } else {
-          console.error('No user data found in localStorage');
-        }
-      } catch (error) {
-        console.error('Error parsing user data from localStorage:', error);
-      }
-    };
-
-    fetchUserName();
+  useEffect(async () => {
+    setUserName(
+      await JSON.parse(
+        localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
+      ).username
+    );
   }, []);
-
   return (
     <Container>
       <img src={Robot} alt="" />

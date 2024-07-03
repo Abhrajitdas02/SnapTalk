@@ -21,19 +21,9 @@ export default function SetAvatar() {
     theme: "dark",
   };
 
-  useEffect(() => {
-    const checkLocalStorage = async () => {
-      try {
-        const userData = localStorage.getItem("chat-app-user");
-        if (!userData) {
-          navigate("/login");
-        }
-      } catch (error) {
-        console.error('Error checking localStorage:', error);
-      }
-    };
-
-    checkLocalStorage();
+  useEffect(async () => {
+    if (!localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY))
+      navigate("/login");
   }, []);
 
   const setProfilePicture = async () => {
@@ -41,7 +31,7 @@ export default function SetAvatar() {
       toast.error("Please select an avatar", toastOptions);
     } else {
       const user = await JSON.parse(
-        localStorage.getItem("chat-app-user")
+        localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
       );
 
       const { data } = await axios.post(`${setAvatarRoute}/${user._id}`, {
@@ -52,7 +42,7 @@ export default function SetAvatar() {
         user.isAvatarImageSet = true;
         user.avatarImage = data.image;
         localStorage.setItem(
-          "chat-app-user",
+          process.env.REACT_APP_LOCALHOST_KEY,
           JSON.stringify(user)
         );
         navigate("/");
@@ -62,26 +52,18 @@ export default function SetAvatar() {
     }
   };
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const data = [];
-        for (let i = 0; i < 4; i++) {
-          const image = await axios.get(`${api}/${Math.round(Math.random() * 1000)}`);
-          const buffer = Buffer.from(image.data);
-          data.push(buffer.toString("base64"));
-        }
-        setAvatars(data);
-        setIsLoading(false);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setIsLoading(false); // Ensure loading state is updated even on error
-      }
+  useEffect(async () => {
+    const data = [];
+    for (let i = 0; i < 4; i++) {
+      const image = await axios.get(
+        `${api}/${Math.round(Math.random() * 1000)}`
+      );
+      const buffer = new Buffer(image.data);
+      data.push(buffer.toString("base64"));
     }
-  
-    fetchData();
+    setAvatars(data);
+    setIsLoading(false);
   }, []);
-
   return (
     <>
       {isLoading ? (

@@ -14,25 +14,17 @@ export default function Chat() {
   const [contacts, setContacts] = useState([]);
   const [currentChat, setCurrentChat] = useState(undefined);
   const [currentUser, setCurrentUser] = useState(undefined);
-
-  useEffect(() => {
-    const fetchCurrentUser = async () => {
-      try {
-        const userData = localStorage.getItem("chat-app-user");
-        if (!userData) {
-          navigate("/login");
-        } else {
-          const parsedUser = JSON.parse(userData);
-          setCurrentUser(parsedUser);
-        }
-      } catch (error) {
-        console.error('Error parsing user data from localStorage:', error);
-      }
-    };
-
-    fetchCurrentUser();
+  useEffect(async () => {
+    if (!localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
+      navigate("/login");
+    } else {
+      setCurrentUser(
+        await JSON.parse(
+          localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
+        )
+      );
+    }
   }, []);
-
   useEffect(() => {
     if (currentUser) {
       socket.current = io(host);
@@ -40,25 +32,16 @@ export default function Chat() {
     }
   }, [currentUser]);
 
-  useEffect(() => {
-    const fetchContacts = async () => {
-      if (currentUser) {
-        if (currentUser.isAvatarImageSet) {
-          try {
-            const response = await axios.get(`${allUsersRoute}/${currentUser._id}`);
-            setContacts(response.data);
-          } catch (error) {
-            console.error('Error fetching contacts:', error);
-          }
-        } else {
-          navigate("/setAvatar");
-        }
+  useEffect(async () => {
+    if (currentUser) {
+      if (currentUser.isAvatarImageSet) {
+        const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
+        setContacts(data.data);
+      } else {
+        navigate("/setAvatar");
       }
-    };
-
-    fetchContacts();
-  }, [currentUser, navigate]);
-
+    }
+  }, [currentUser]);
   const handleChatChange = (chat) => {
     setCurrentChat(chat);
   };
@@ -94,9 +77,6 @@ const Container = styled.div`
     display: grid;
     grid-template-columns: 25% 75%;
     @media screen and (min-width: 720px) and (max-width: 1080px) {
-      grid-template-columns: 35% 65%;
-    }
-      @media screen and (min-width: 360px) and (max-width: 480px) {
       grid-template-columns: 35% 65%;
     }
   }
