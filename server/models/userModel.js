@@ -30,3 +30,5 @@ const userSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model("Users", userSchema);
+
+//schema for both  register 

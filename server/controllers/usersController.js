@@ -76,6 +76,7 @@ module.exports.register = async (req, res, next) => {
     }
 };
   
+
 module.exports.logout = (req, res, next) => {
   try {
     if (!req.params.id) return res.json({ msg: "User id is required " });
@@ -85,6 +86,7 @@ module.exports.logout = (req, res, next) => {
     next(ex);
   }
 };
+//all functionalilites of chatapp backend implimented.
 
 // module.exports.register=(req,res,next)=>{
 //     console.log(req.body);

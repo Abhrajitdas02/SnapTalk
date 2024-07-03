@@ -16,5 +16,6 @@ const MessageSchema = mongoose.Schema(
     timestamps: true,
   }
 );
+//schema for both  register 
 
 module.exports = mongoose.model("Messages", MessageSchema);
