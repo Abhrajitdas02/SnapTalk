@@ -11,22 +11,30 @@ export default function ChatContainer({ currentChat, socket }) {
   const scrollRef = useRef();
   const [arrivalMessage, setArrivalMessage] = useState(null);
 
-  useEffect(async () => {
-    const data = await JSON.parse(
-      localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-    );
-    const response = await axios.post(recieveMessageRoute, {
-      from: data._id,
-      to: currentChat._id,
-    });
-    setMessages(response.data);
+  useEffect(() => {
+    async function fetchMessages() {
+      try {
+        const data = JSON.parse(localStorage.getItem("chat-app-user"));
+        const response = await axios.post(recieveMessageRoute, {
+          from: data._id,
+          to: currentChat._id,
+        });
+        setMessages(response.data);
+      } catch (error) {
+        console.error('Error fetching messages:', error);
+      }
+    }
+
+    if (currentChat) {
+      fetchMessages();
+    }
   }, [currentChat]);
 
   useEffect(() => {
     const getCurrentChat = async () => {
       if (currentChat) {
         await JSON.parse(
-          localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
+          localStorage.getItem("chat-app-user")
         )._id;
       }
     };
@@ -35,12 +43,12 @@ export default function ChatContainer({ currentChat, socket }) {
 
   const handleSendMsg = async (msg) => {
     const data = await JSON.parse(
-      localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
+      localStorage.getItem("chat-app-user")
     );
     socket.current.emit("send-msg", {
       to: currentChat._id,
       from: data._id,
-      msg,
+      message: msg,
     });
     await axios.post(sendMessageRoute, {
       from: data._id,
@@ -114,6 +122,9 @@ const Container = styled.div`
   overflow: hidden;
   @media screen and (min-width: 720px) and (max-width: 1080px) {
     grid-template-rows: 15% 70% 15%;
+  }
+  @media screen and (min-width: 360px) and (max-width: 480px) {
+  grid-template-rows: 15% 70% 15%;
   }
   .chat-header {
     display: flex;

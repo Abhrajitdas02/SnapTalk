@@ -14,17 +14,25 @@ export default function Chat() {
   const [contacts, setContacts] = useState([]);
   const [currentChat, setCurrentChat] = useState(undefined);
   const [currentUser, setCurrentUser] = useState(undefined);
-  useEffect(async () => {
-    if (!localStorage.getItem("chat-app-user")) {
-      navigate("/login");
-    } else {
-      setCurrentUser(
-        await JSON.parse(
-          localStorage.getItem("chat-app-user")
-        )
-      );
-    }
+
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      try {
+        const userData = localStorage.getItem("chat-app-user");
+        if (!userData) {
+          navigate("/login");
+        } else {
+          const parsedUser = JSON.parse(userData);
+          setCurrentUser(parsedUser);
+        }
+      } catch (error) {
+        console.error('Error parsing user data from localStorage:', error);
+      }
+    };
+
+    fetchCurrentUser();
   }, []);
+
   useEffect(() => {
     if (currentUser) {
       socket.current = io(host);
@@ -32,16 +40,25 @@ export default function Chat() {
     }
   }, [currentUser]);
 
-  useEffect(async () => {
-    if (currentUser) {
-      if (currentUser.isAvatarImageSet) {
-        const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
-        setContacts(data.data);
-      } else {
-        navigate("/setAvatar");
+  useEffect(() => {
+    const fetchContacts = async () => {
+      if (currentUser) {
+        if (currentUser.isAvatarImageSet) {
+          try {
+            const response = await axios.get(`${allUsersRoute}/${currentUser._id}`);
+            setContacts(response.data);
+          } catch (error) {
+            console.error('Error fetching contacts:', error);
+          }
+        } else {
+          navigate("/setAvatar");
+        }
       }
-    }
-  }, [currentUser]);
+    };
+
+    fetchContacts();
+  }, [currentUser, navigate]);
+
   const handleChatChange = (chat) => {
     setCurrentChat(chat);
   };

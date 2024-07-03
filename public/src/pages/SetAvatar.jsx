@@ -21,9 +21,19 @@ export default function SetAvatar() {
     theme: "dark",
   };
 
-  useEffect(async () => {
-    if (!localStorage.getItem("chat-app-user"))
-      navigate("/login");
+  useEffect(() => {
+    const checkLocalStorage = async () => {
+      try {
+        const userData = localStorage.getItem("chat-app-user");
+        if (!userData) {
+          navigate("/login");
+        }
+      } catch (error) {
+        console.error('Error checking localStorage:', error);
+      }
+    };
+
+    checkLocalStorage();
   }, []);
 
   const setProfilePicture = async () => {
@@ -52,19 +62,26 @@ export default function SetAvatar() {
     }
   };
 
-  useEffect(async () => {
-    const data = [];
-    for (let i = 0; i < 4; i++) {
-      const image = await axios.get(
-        `${api}/${Math.round(Math.random() * 1000)}`
-      );
-      const buffer = Buffer.from(image.data);
-      data.push(buffer.toString("base64"));
-
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const data = [];
+        for (let i = 0; i < 4; i++) {
+          const image = await axios.get(`${api}/${Math.round(Math.random() * 1000)}`);
+          const buffer = Buffer.from(image.data);
+          data.push(buffer.toString("base64"));
+        }
+        setAvatars(data);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setIsLoading(false); // Ensure loading state is updated even on error
+      }
     }
-    setAvatars(data);
-    setIsLoading(false);
+  
+    fetchData();
   }, []);
+
   return (
     <>
       {isLoading ? (

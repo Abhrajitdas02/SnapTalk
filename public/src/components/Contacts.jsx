@@ -6,13 +6,25 @@ export default function Contacts({ contacts, changeChat }) {
   const [currentUserName, setCurrentUserName] = useState(undefined);
   const [currentUserImage, setCurrentUserImage] = useState(undefined);
   const [currentSelected, setCurrentSelected] = useState(undefined);
-  useEffect(async () => {
-    const data = await JSON.parse(
-      localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-    );
-    setCurrentUserName(data.username);
-    setCurrentUserImage(data.avatarImage);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const data = JSON.parse(localStorage.getItem("chat-app-user"));
+        if (data) {
+          setCurrentUserName(data.username);
+          setCurrentUserImage(data.avatarImage);
+        } else {
+          console.error('No user data found in localStorage');
+        }
+      } catch (error) {
+        console.error('Error parsing user data from localStorage:', error);
+      }
+    };
+
+    fetchUserData();
   }, []);
+
   const changeCurrentChat = (index, contact) => {
     setCurrentSelected(index);
     changeChat(contact);
