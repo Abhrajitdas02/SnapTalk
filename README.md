@@ -1,70 +1,111 @@
-# Getting Started with Create React App
+<h1 align="center">SnapTalk</h1>
+<h5 align="center">"Connect instantly and effortlessly with friends and family on our user-friendly chatting platform!"</h5>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<hr>
 
-## Available Scripts
+<img align="right" height="300px" alt="chat img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1KsEgaridEKOXoORpwsIgNgHM4XTEWtIgUA&s">
 
-In the project directory, you can run:
+# Project Overview
 
-### `npm start`
+An online platform where individuals can send text, emojis and messages to each other in real time. This Chat Application allows the users to login and choose an unique avatar as their Profile DP.This project uses ReactJs for the frontend and NodeJs(Express) for Backend Server and MongoDb as Database. 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+# Web Application
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+This javascript based application allows users to create an account on the site,send and receive text messages along with emojis in real time, helps them to stay connected with their favourite persons,family and friends.
 
-### `npm test`
+New Users can Sign-up in the website through the Register page giving their username,email and password.Moreover a user can chhose  his/her favourite avatar as thier profile picture which will be displayed along with their name.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## Project Contributors
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- [@Sayantan Sen](https://github.com/Sayantan-Sen-2003)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- [@Abhrajit Das](https://github.com/Abhrajitdas02)
+ 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Documentation
+Frontend-
 
-### `npm run eject`
+[ReactJs](https://react.dev/blog/2023/03/16/introducing-react-dev)
+[TailwindCss](https://v2.tailwindcss.com/docs)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Backend-
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+[NodeJs](https://nodejs.org/docs/latest/api/)
+[ExpressJs](https://devdocs.io/express/)
+[MongoDb](https://www.mongodb.com/docs/)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+<img  height="410px" alt="chatting img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5PLAepjuqKQMVeJpiptZ-0jDuKZViUQLUPg&s">
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Environment Variables
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+To run this project, you will need to add the following environment variables to your .env file.
 
-### Code Splitting
+For BACKEND (In Server Directory)-
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+`MONGO`
 
-### Analyzing the Bundle Size
+`PORT`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+For FrontEnd (In public Folder)-
 
-### Making a Progressive Web App
+`REACT_APP_LOCALHOST_KEY`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Node modules installation
 
-### Advanced Configuration
+To install the node modules used in the project,
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```bash
+  npm i 
+```
+or
 
-### Deployment
+```bash
+  npm install 
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+in both public directory (frontend) &
+in server directory(backend server)
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Run Command
+
+To run this project in local server,
+
+```bash
+  npm run start
+```
+in both public directory (frontend) &
+in server directory(backend server)
+
+## TECHNOLOGY STACK
+
+FRONTEND
+
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+
+BACKEND
+
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
+
+## Features
+
+- Login Page via username-password 
+- register Page for new Users to sign-up in our website.
+- Option to choose a avatar as thier DP of thier account.
+- A text input field to type and send text messages and emojis in real time.
+- Logout functionality
+- Backend encrypted database for user details,passwords,chats,avatar .
+
+
+## Website Preview 
+<img  src="img_templates/img0.png">
+<img  src="img_templates/img1.png">
+<img src="img_templates/img2.png">
+<img src="img_templates/img3.png">
+<img src="img_templates/img4.png">
